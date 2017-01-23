@@ -1,19 +1,31 @@
-defaultTasks 'clean', 'install'
-
-group 'no.rogfk'
-version '0.0.1-SNAPSHOT'
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+}
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
+jar {
+    baseName = 'rfk-ldap-utilities'
+    version = '0.0.2-SNAPSHOT'
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven {
+        url "http://dl.bintray.com/rfkikt/maven"
+    }
 }
 
 dependencies {
     testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+}
+
+if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
+    apply from: 'https://raw.githubusercontent.com/rogaland/fint-buildscripts/master/bintray.gradle'
 }
