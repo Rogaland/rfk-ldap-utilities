@@ -1,10 +1,8 @@
-plugins {
-    id "com.jfrog.bintray" version "1.7"
-}
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 jar {
     baseName = 'rfk-ldap-utilities'
@@ -17,15 +15,29 @@ targetCompatibility = 1.8
 repositories {
     jcenter()
     mavenCentral()
-    maven {
-        url "http://dl.bintray.com/rfkikt/maven"
-    }
 }
 
 dependencies {
     testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
 }
 
-if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
-    apply from: 'https://raw.githubusercontent.com/rogaland/fint-buildscripts/master/bintray.gradle'
+plugins {
+    id("maven-publish")
+}
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/rogaland/gradle")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
