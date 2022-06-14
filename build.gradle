@@ -5,7 +5,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 group = 'no.rogfk'
-version = '0.0.3'
+version = '0.0.4-SNAPSHOT'
 
 jar {
     baseName = 'rfk-ldap-utilities'
