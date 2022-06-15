@@ -6,4 +6,4 @@ Small LDAP utility library
 
 ## Timestamp
 
-The static method `LdapTimestamp.getTimestampString()` will return a string value of the current timestamp in LDAP format.
+The static method `LdapTimestamp.getTimestampString()` will return a string value of the current timestamp in LDAP format..
